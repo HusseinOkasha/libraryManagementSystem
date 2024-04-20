@@ -1,13 +1,12 @@
 package com.example.libraryManagementSystem.dto;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDateTime;
 
-import java.util.Date;
-
-public record BookDto(@NotBlank(message = "title can't be empty")  String title,
-                      @NotBlank(message = "Author can't be empty") String author,
-                      @NotNull(message = "publication year can't be empty") String publication_year,
-                      @NotBlank(message = "isbn can't be empty")  String isbn) {
+// represents the book entity when we return it to the outside world.
+public record BookDto (@NotBlank Long id, @Valid BookDetailsDto bookDetailsDto, LocalDateTime createdAt,
+                       LocalDateTime updatedAt){
 }

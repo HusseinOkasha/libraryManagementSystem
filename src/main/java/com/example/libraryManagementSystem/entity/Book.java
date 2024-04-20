@@ -42,7 +42,7 @@ public class Book {
     public Book() {
     }
 
-    public Book(String title, String author, String publication_year, String isbn, LocalDateTime createdAt,
+    public Book(Long id, String title, String author, String publication_year, String isbn, LocalDateTime createdAt,
                 LocalDateTime updatedAt, Set<BorrowingRecord> borrowingRecord) {
         this.title = title;
         this.author = author;
@@ -53,7 +53,8 @@ public class Book {
         this.borrowingRecord = borrowingRecord;
     }
 
-    public Book(String title, String author, String publication_year, String isbn) {
+    public Book(Long id, String title, String author, String publication_year, String isbn) {
+        this.id = id;
         this.title = title;
         this.author = author;
         this.publication_year = publication_year;
