@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "book", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "email"), @UniqueConstraint(columnNames = "phone_number")})
+        @UniqueConstraint(columnNames = "isbn")})
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +25,7 @@ public class Book {
     private String author;
 
     @Column(name = "publication_year" , nullable = false)
-    private Date publication_year;
+    private String publication_year;
 
     @Column(name = "isbn", nullable = false)
     private String isbn;
@@ -42,9 +42,8 @@ public class Book {
     public Book() {
     }
 
-    public Book(long id, String title, String author, Date publication_year, String isbn, LocalDateTime createdAt,
+    public Book(String title, String author, String publication_year, String isbn, LocalDateTime createdAt,
                 LocalDateTime updatedAt, Set<BorrowingRecord> borrowingRecord) {
-        this.id = id;
         this.title = title;
         this.author = author;
         this.publication_year = publication_year;
@@ -52,6 +51,14 @@ public class Book {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.borrowingRecord = borrowingRecord;
+    }
+
+    public Book(String title, String author, String publication_year, String isbn) {
+        this.title = title;
+        this.author = author;
+        this.publication_year = publication_year;
+        this.isbn = isbn;
+        this.borrowingRecord = new HashSet<>();
     }
 
     public long getId() {
@@ -78,11 +85,11 @@ public class Book {
         this.author = author;
     }
 
-    public Date getPublication_year() {
+    public String getPublication_year() {
         return publication_year;
     }
 
-    public void setPublication_year(Date publication_year) {
+    public void setPublication_year(String publication_year) {
         this.publication_year = publication_year;
     }
 
@@ -129,6 +136,17 @@ public class Book {
     @Override
     public int hashCode() {
         return Objects.hashCode(isbn);
+    }
+
+    @PrePersist
+    public void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void onUpdate() {
+        updatedAt = LocalDateTime.now();
     }
 
 
