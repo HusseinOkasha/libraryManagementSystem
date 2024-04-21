@@ -46,4 +46,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
     }
 
+    @ResponseBody
+    @ExceptionHandler(BookReturnException.class)
+    public ResponseEntity<String> handleBookReturnException(BookReturnException ex){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ResponseBody
+    @ExceptionHandler(BookAlreadyBorrowedByPatronException.class)
+    public ResponseEntity<String> handleBookAlreadyBorrowedByPatronException(BookAlreadyBorrowedByPatronException ex){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
+
 }
