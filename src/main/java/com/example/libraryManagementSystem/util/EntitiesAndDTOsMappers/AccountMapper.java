@@ -16,6 +16,6 @@ public class AccountMapper {
     // maps signupDto to Account entity
     public static Account signupDtoToAccountEntity(SignupDto signupDto){
         return new Account(signupDto.name(), signupDto.email(), signupDto.phoneNumber(), signupDto.password(),
-                signupDto.AccountType(),null, null);
+                signupDto.accountType(),null, null);
     }
 }

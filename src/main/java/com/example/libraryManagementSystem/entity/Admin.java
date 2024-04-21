@@ -8,8 +8,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name ="admin")
-public class
-Admin {
+public class Admin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +27,10 @@ Admin {
 
     public Admin() {
 
+    }
+
+    public Admin(Account account) {
+        this.account = account;
     }
 
     public Admin(long id, Account account, LocalDateTime createdAt, LocalDateTime updatedAt) {

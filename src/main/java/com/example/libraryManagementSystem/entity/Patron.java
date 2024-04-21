@@ -33,6 +33,10 @@ public class Patron {
     public Patron() {
     }
 
+    public Patron(Account account) {
+        this.account = account;
+    }
+
     public Patron(Account account, Set<BorrowingRecord> borrowingRecord, LocalDateTime createdAt,
                   LocalDateTime updatedAt) {
         this.account = account;
@@ -87,6 +91,18 @@ public class Patron {
         if (!(o instanceof Patron patron)) return false;
         return Objects.equals(account, patron.account);
     }
+
+    @PrePersist
+    public void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
+
 
     @Override
     public int hashCode() {
