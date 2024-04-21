@@ -10,5 +10,5 @@ public record SignupDto(@NotBlank(message = "name must not be empty") String nam
                         @NotBlank(message = "email must not be empty") @Email (message = "email must respect email rules") String email,
                         @NotBlank(message = "phone number must not be empty") String phoneNumber,
                         @NotBlank(message = "phone number must not be empty") String password,
-                        @NotNull(message = "Account type must not be empty") AccountType AccountType) {
+                        @NotNull(message = "Account type must not be empty") AccountType accountType) {
 }
