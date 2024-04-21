@@ -1,5 +1,6 @@
 package com.example.libraryManagementSystem.entity;
 
+import com.example.libraryManagementSystem.enums.BookStatus;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -18,7 +19,6 @@ public class BorrowingRecord {
 
         @Column(name = "book_id")
         private Long bookId;
-
         public Id() {
         }
 
@@ -40,6 +40,9 @@ public class BorrowingRecord {
     @JoinColumn(name = "book_id", insertable = false, updatable = false)
     private Book book;
 
+    @Column(name = "status", nullable = false)
+    private BookStatus status;
+
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
@@ -49,9 +52,12 @@ public class BorrowingRecord {
     public BorrowingRecord() {
     }
 
-    public BorrowingRecord(Patron patron, Book book, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public BorrowingRecord(Id id, Patron patron, Book book, BookStatus status, LocalDateTime createdAt,
+                           LocalDateTime updatedAt) {
+        this.id = id;
         this.patron = patron;
         this.book = book;
+        this.status = status;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -80,6 +86,14 @@ public class BorrowingRecord {
         this.book = book;
     }
 
+    public BookStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(BookStatus status) {
+        this.status = status;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -95,6 +109,18 @@ public class BorrowingRecord {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    @PrePersist
+    public void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
+
 
     @Override
     public boolean equals(Object o) {
