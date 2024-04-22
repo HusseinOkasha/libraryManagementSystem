@@ -12,4 +12,5 @@ public interface AdminService {
     Optional<Admin> findByAccount_Email(String email);
     Optional<Admin> save(Admin admin);
     void deleteById(Long Id);
+    void deleteAll();
 }
