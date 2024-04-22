@@ -23,8 +23,4 @@ public class LoginController {
 
         return tokenService.generateToken(authentication.getName(), AccountType.ADMIN);
     }
-    @PostMapping("/patron")
-    public String patronLogin(Authentication authentication) {
-        return tokenService.generateToken(authentication.getName(), AccountType.PATRON);
-    }
 }
