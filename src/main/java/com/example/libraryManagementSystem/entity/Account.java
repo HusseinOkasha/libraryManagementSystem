@@ -26,9 +26,6 @@ public class Account {
     @Column(name="phone_number", nullable = false)
     private String phoneNumber;
 
-    @Column(name = "password", nullable = false)
-    private String password;
-
     @Column(name= "account_type", nullable = false)
     private AccountType accountType;
 
@@ -43,12 +40,11 @@ public class Account {
     public Account() {
     }
 
-    public Account(String name, String email, String phoneNumber, String password, AccountType accountType,
+    public Account(String name, String email, String phoneNumber, AccountType accountType,
                    LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.password = password;
         this.accountType = accountType;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -84,14 +80,6 @@ public class Account {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public AccountType getAccountType() {
@@ -149,7 +137,6 @@ public class Account {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", password='" + password + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';

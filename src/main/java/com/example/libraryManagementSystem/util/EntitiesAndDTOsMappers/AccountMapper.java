@@ -15,7 +15,13 @@ public class AccountMapper {
 
     // maps signupDto to Account entity
     public static Account signupDtoToAccountEntity(SignupDto signupDto){
-        return new Account(signupDto.name(), signupDto.email(), signupDto.phoneNumber(), signupDto.password(),
+        return new Account(signupDto.name(), signupDto.email(), signupDto.phoneNumber(),
                 signupDto.accountType(),null, null);
+    }
+
+    // account entity To profileDto
+    public static ProfileDto accountEntityToProfileDto(Account account){
+        return new ProfileDto(account.getName(), account.getEmail(), account.getPhoneNumber(), account.getAccountType(),
+                account.getCreatedAt(), account.getUpdatedAt());
     }
 }

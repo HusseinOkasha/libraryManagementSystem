@@ -19,6 +19,9 @@ public class Admin {
     @JoinColumn(name = "account_id", referencedColumnName = "id", nullable = false)
     private Account account;
 
+    @Column(name = "password", nullable = false)
+    private String password;
+
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
@@ -29,11 +32,12 @@ public class Admin {
 
     }
 
-    public Admin(Account account) {
+    public Admin(Account account, String password) {
         this.account = account;
+        this.password = password;
     }
 
-    public Admin(long id, Account account, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Admin(long id, Account account ,LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.account = account;
         this.createdAt = createdAt;
@@ -46,6 +50,14 @@ public class Admin {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Account getAccount() {
@@ -71,6 +83,18 @@ public class Admin {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    @PrePersist
+    public void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
+
 
     @Override
     public boolean equals(Object o) {

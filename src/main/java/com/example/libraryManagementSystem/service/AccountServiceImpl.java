@@ -2,6 +2,7 @@ package com.example.libraryManagementSystem.service;
 
 import com.example.libraryManagementSystem.dao.AccountRepository;
 import com.example.libraryManagementSystem.entity.Account;
+import com.example.libraryManagementSystem.enums.AccountType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,11 @@ public class AccountServiceImpl implements AccountService{
     @Override
     public Optional<Account> findByPhoneNumber(String phoneNumber) {
         return accountRepository.findByPhoneNumber(phoneNumber);
+    }
+
+    @Override
+    public Optional<Account> findByEmailAndAccountType(String email, AccountType accountType) {
+        return accountRepository.findByEmailAndAccountType(email,accountType);
     }
 
     @Override

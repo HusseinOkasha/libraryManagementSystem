@@ -24,7 +24,13 @@ public class AdminServiceImpl implements  AdminService{
 
     @Override
     public Optional<Admin> findById(Long id) {
+
         return adminRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Admin> findByAccount_Email(String email) {
+        return adminRepository.findByAccount_Email(email);
     }
 
     @Override
