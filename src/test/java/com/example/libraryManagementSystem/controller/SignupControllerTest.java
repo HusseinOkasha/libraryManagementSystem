@@ -40,7 +40,6 @@ class SignupControllerTest {
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:latest")
             .withDatabaseName("database").withUsername("myuser");
 
-    private static String token;
     private static List<Admin> admins = new ArrayList<>();
 
     @LocalServerPort
