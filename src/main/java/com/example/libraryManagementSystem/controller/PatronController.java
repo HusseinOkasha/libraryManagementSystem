@@ -48,7 +48,7 @@ public class PatronController {
         }
 
         Account account = new Account(signupDto.name(), signupDto.email(), signupDto.phoneNumber(),
-                signupDto.password(),signupDto.accountType(),null, null);
+                signupDto.accountType(),null, null);
 
         Patron patron =  new Patron(account);
 

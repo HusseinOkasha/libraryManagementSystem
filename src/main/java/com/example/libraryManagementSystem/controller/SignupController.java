@@ -6,6 +6,7 @@ import com.example.libraryManagementSystem.entity.Account;
 import com.example.libraryManagementSystem.entity.Admin;
 import com.example.libraryManagementSystem.entity.Patron;
 import com.example.libraryManagementSystem.enums.AccountType;
+import com.example.libraryManagementSystem.exception.AccountAlreadyExistsException;
 import com.example.libraryManagementSystem.exception.AccountCreationFailureException;
 import com.example.libraryManagementSystem.security.EncryptionService;
 import com.example.libraryManagementSystem.service.AccountService;
@@ -24,19 +25,16 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api")
 public class SignupController {
-
     @Autowired
-    private final PatronService patronService;
-
+    private final AccountService accountService;
     @Autowired
     private final AdminService adminService;
 
     @Autowired
     private final EncryptionService encryptionService;
 
-    public SignupController(PatronService patronService, AdminService adminService, EncryptionService encryptionService) {
-
-        this.patronService = patronService;
+    public SignupController(AccountService accountService, AdminService adminService, EncryptionService encryptionService) {
+        this.accountService = accountService;
         this.adminService = adminService;
         this.encryptionService = encryptionService;
     }
@@ -44,31 +42,29 @@ public class SignupController {
     @Validated
     @PostMapping("/signup")
     public ProfileDto signup(@RequestBody @Valid SignupDto signupDto) throws Exception {
-        // maps signupDto to account entity
-        Account account = AccountMapper.signupDtoToAccountEntity(signupDto);
+        // check if there is admin with this email
+        Optional<Account> result  = accountService.findByEmailAndAccountType(signupDto.email(), AccountType.ADMIN);
 
-        // encrypt the provided password using Bcrypt before saving it to the database.
+        // throw exception with response status code 409 conflict.
+        if(result.isPresent()){
+            throw new AccountAlreadyExistsException("this email already exists");
+        }
+        
+        // create new account.
+        Account account  = AccountMapper.signupDtoToAccountEntity(signupDto);
+
+        //Encrypt the provided raw password.
         String encryptedPassword = encryptionService.encryptString(signupDto.password());
 
-        // put the encrypted password in the account entity before saving it to the database.
-        account.setPassword(encryptedPassword);
-        Account dbAccount = null;
-        try{
-            // db account is the saved account in the database, and it contains the database id
+        // create new admin
+        Admin admin = new Admin(account, encryptedPassword);
 
-            if(account.getAccountType() == AccountType.ADMIN){
-                dbAccount = adminService.save(new Admin(account)).get().getAccount();
-            }
-            else if(account.getAccountType() == AccountType.PATRON){
-                dbAccount = patronService.save(new Patron(account)).get().getAccount();
-            }
-        }
-        catch (DataIntegrityViolationException e){
-            throw new AccountCreationFailureException(e.getMessage());
-        }
+        // persist the admin to the database.
+        Optional<Admin> adminSaveResult = adminService.save(admin);
 
-        // maps the account entity to AccountDto
-        return AccountMapper.AccountEntityToAccountDto(dbAccount);
+        Admin dbAdmin = adminSaveResult.orElseThrow(
+                ()-> new AccountCreationFailureException("Error saving to the database"));
+        return AccountMapper.accountEntityToProfileDto(dbAdmin.getAccount());
     }
 
 }

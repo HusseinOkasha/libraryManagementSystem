@@ -1,6 +1,6 @@
 package com.example.libraryManagementSystem.security;
 
-import com.example.libraryManagementSystem.entity.Account;
+import com.example.libraryManagementSystem.entity.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,13 +8,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-public class AccountDetails implements UserDetails {
+public class AdminDetails implements UserDetails {
 
-    private final Account account;
+    private final Admin admin;
 
     @Autowired
-    public AccountDetails(Account account) {
-        this.account = account;
+    public AdminDetails(Admin admin) {
+        this.admin = admin;
     }
 
 
@@ -25,12 +25,12 @@ public class AccountDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return account.getPassword();
+        return admin.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return account.getEmail();
+        return admin.getAccount().getEmail();
     }
 
     @Override

@@ -20,7 +20,7 @@ public class AccountAuthenticationProviderService implements AuthenticationProvi
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    private JpaAccountDetailsService accountDetailsService;
+    private JpaAdminDetailsService accountDetailsService;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {

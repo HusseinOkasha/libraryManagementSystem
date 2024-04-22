@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler(AccountCreationFailureException.class)
     public ResponseEntity<String> handleAccountCreationFailure(AccountCreationFailureException ex) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
     }
 
     @ResponseBody
