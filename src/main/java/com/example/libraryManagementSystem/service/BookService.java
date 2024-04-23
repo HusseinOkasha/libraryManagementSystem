@@ -11,5 +11,6 @@ public interface BookService {
     Optional<Book>findById(long id);
     Optional<Book>findByISBN(String isbn);
     Optional<Book>save(Book book);
+    void deleteAll();
     void deleteById(Long id);
 }
