@@ -3,6 +3,7 @@ package com.example.libraryManagementSystem.controller;
 import com.example.libraryManagementSystem.dto.PatronDto;
 import com.example.libraryManagementSystem.dto.ProfileDto;
 import com.example.libraryManagementSystem.dto.SignupDto;
+import com.example.libraryManagementSystem.dto.UpdatePatronDto;
 import com.example.libraryManagementSystem.entity.Account;
 import com.example.libraryManagementSystem.entity.Patron;
 import com.example.libraryManagementSystem.exception.AccountCreationFailureException;
@@ -38,17 +39,20 @@ public class PatronController {
     @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @Validated
     @PostMapping("/patrons")
-    public PatronDto addNewPatron(@RequestBody @Valid SignupDto signupDto) throws Exception {
+    public PatronDto addNewPatron(@RequestBody @Valid PatronDto patronDto) throws Exception {
+
+        ProfileDto profileDto = patronDto.profileDto();
+
         // check if there is already account with this email
-        Optional<Account> result = accountService.findByEmail(signupDto.email());
+        Optional<Account> result = accountService.findByEmail(profileDto.email());
         if(result.isPresent()){
             // in case the provided email already exists
             // it will throw this exception with response status code conflict 409
             throw new AccountCreationFailureException("this email already exists.");
         }
 
-        Account account = new Account(signupDto.name(), signupDto.email(), signupDto.phoneNumber(),
-                signupDto.accountType(),null, null);
+        Account account = new Account(profileDto.name(), profileDto.email(), profileDto.phoneNumber(),
+                profileDto.accountType(),null, null);
 
         Patron patron =  new Patron(account);
 
@@ -76,7 +80,7 @@ public class PatronController {
     @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     @Validated
     @PutMapping("/patrons/{id}")
-    public PatronDto updatePatronById(@PathVariable @PositiveOrZero Long id, @RequestBody @Valid ProfileDto profileDto)
+    public PatronDto updatePatronById(@PathVariable @PositiveOrZero Long id, @RequestBody @Valid UpdatePatronDto updatePatronDto)
             throws Exception {
         // fetch the patron from the database.
         Optional<Patron> result = patronService.findById(id);
@@ -89,8 +93,8 @@ public class PatronController {
         Account dbAccount  = dbPatron.getAccount();
 
         // 2) update the patron's account with the provided values.
-        dbAccount.setName(profileDto.name());
-        dbAccount.setPhoneNumber(profileDto.phoneNumber());
+        dbAccount.setName(updatePatronDto.name());
+        dbAccount.setPhoneNumber(updatePatronDto.phoneNumber());
         // I didn't support email change as I depend on it as identifier in spring security.
         // solution_1 to this issue is to depend on the database id something that doesn't change.
         // solution_2 is to generate new token when the email changes.
