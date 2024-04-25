@@ -6,6 +6,7 @@ import com.example.libraryManagementSystem.dto.SignupDto;
 import com.example.libraryManagementSystem.dto.UpdatePatronDto;
 import com.example.libraryManagementSystem.entity.Account;
 import com.example.libraryManagementSystem.entity.Patron;
+import com.example.libraryManagementSystem.exception.AccountAlreadyExistsException;
 import com.example.libraryManagementSystem.exception.AccountCreationFailureException;
 import com.example.libraryManagementSystem.exception.FailedToSaveToTheDatabaseException;
 import com.example.libraryManagementSystem.exception.PatronNotFoundException;
@@ -48,7 +49,7 @@ public class PatronController {
         if(result.isPresent()){
             // in case the provided email already exists
             // it will throw this exception with response status code conflict 409
-            throw new AccountCreationFailureException("this email already exists.");
+            throw new AccountAlreadyExistsException("this email already exists.");
         }
 
         Account account = new Account(profileDto.name(), profileDto.email(), profileDto.phoneNumber(),
