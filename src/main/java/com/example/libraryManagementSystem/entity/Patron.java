@@ -20,7 +20,7 @@ public class Patron {
     @JoinColumn(name = "account_id", referencedColumnName = "id", nullable = false)
     private Account account;
 
-    @OneToMany(mappedBy = "patron")
+    @OneToMany(mappedBy = "patron", cascade = CascadeType.ALL)
     private Set<BorrowingRecord> borrowingRecord = new HashSet<>();
 
     @Column(name = "created_at", nullable = false)

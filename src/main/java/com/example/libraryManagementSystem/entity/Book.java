@@ -36,7 +36,7 @@ public class Book {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     private Set<BorrowingRecord> borrowingRecord = new HashSet<>();
 
     public Book() {

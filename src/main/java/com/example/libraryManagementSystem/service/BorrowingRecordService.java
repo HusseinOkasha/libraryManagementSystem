@@ -11,5 +11,6 @@ public interface BorrowingRecordService {
     List<BorrowingRecord> findAll();
     Optional<BorrowingRecord> findById(Id id);
     Optional<BorrowingRecord> save(BorrowingRecord  borrowingRecord);
+    void deleteAll();
     void deleteById(Id id);
 }
