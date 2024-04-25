@@ -45,105 +45,35 @@ All endpoints are protected with JWTs except the signup endpoint.
 * it will return a token save it.
 
 #### Create new patron
-* `curl -X POST \
-  http://localhost:8080/api/patrons \
-  -H 'Authorization: Bearer token' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "profileDto":{
-  "name":"f15",
-  "email":"e15@email.com",
-  "phoneNumber":"15",
-  "accountType":"PATRON"
-  }
-  }'
-  `
+* `curl -X POST http://localhost:8080/api/patrons -H 'Authorization: Bearer token' -H 'Content-Type: application/json' -d '{"profileDto":{"name":"f15","email":"e15@email.com","phoneNumber":"15","accountType":"PATRON"} }'`
 #### Gat Patron By ID
-* `curl -X GET \
-  http://localhost:8080/api/patrons/id \
-  -H 'Authorization: Bearer token' \
-  -H 'Content-Type: application/json'
-`
+* `curl -X GET http://localhost:8080/api/patrons/id -H 'Authorization: Bearer token' -H 'Content-Type: application/json'`
 * Replace id in the url with the wanted id.
 #### Get All Patrons
-* `curl -X GET \
-  http://localhost:8080/api/patrons \
-  -H 'Authorization: Bearer token' \
-  -H 'Content-Type: application/json'
-  `
+* `curl -X GET http://localhost:8080/api/patrons -H 'Authorization: Bearer token' -H 'Content-Type: application/json'`
 #### Update patron by ID
-* `curl -X PUT \ 
-   http://localhost:8080/api/patrons\id \
-  -H 'Authorization: Bearer token' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "name":"f13 updated",
-  "phoneNumber":"13"
-}'`
+* `curl -X PUT http://localhost:8080/api/patrons/id -H 'Authorization: Bearer token' -H 'Content-Type: application/json' -d '{"name":"f13 updated","phoneNumber":"13"}'`
 
 #### Delete patron by ID
-* `curl -X DELETE \
-  http://localhost:8080/api/patrons\id \
-  -H 'Authorization: Bearer token' \
-  -H 'Content-Type: application/json'`
+* `curl -X DELETE http://localhost:8080/api/patrons/id -H 'Authorization: Bearer token' -H 'Content-Type: application/json'`
 * Replace id in the url with the required id.
 
 #### Add new book
- * `curl -X POST \
-   http://localhost:8080/api/books \
--H 'Authorization: Bearer token' \
--H 'Content-Type: application/json' \
--d '{
-"title":"Book4",
-"author":"author4",
-"publication_year":"2024",
-"isbn":"isbn4"
-}'
-`
+ * `curl -X POST http://localhost:8080/api/books -H 'Authorization: Bearer token' -H 'Content-Type: application/json' -d '{"title":"Book4","author":"author4","publication_year":"2024","isbn":"isbn4"}'`
 #### Get Book by ID
-* `curl -X GET \
-  http://localhost:8080/api/books/id \
-  -H 'Authorization: Bearer token' \
-  -H 'Content-Type: application/json'
-  ` 
+* `curl -X GET http://localhost:8080/api/books/id -H 'Authorization: Bearer token' -H 'Content-Type: application/json'` 
 * Replace id in the url with the required id
 
 #### Get all books
-* `curl -X GET \
-  http://localhost:8080/api/books \
-  -H 'Authorization: Bearer token' \
-  -H 'Content-Type: application/json'
-  `
+* `curl -X GET http://localhost:8080/api/books -H 'Authorization: Bearer token' -H 'Content-Type: application/json'`
 #### Update Book by ID
- * `curl -X PUT \
-http://localhost:8080/api/books \
--H 'Authorization: Bearer token' \
--H 'Content-Type: application/json' \
--d '{
-"title":"Book4 updated",
-"author":"author4",
-"publication_year":"2024",
-"isbn":"isbn4"
-}'
-`
+ * `curl -X PUT http://localhost:8080/api/books -H 'Authorization: Bearer token' -H 'Content-Type: application/json' -d '{"title":"Book4 updated","author":"author4","publication_year":"2024","isbn":"isbn4"}'`
 #### Delete Book by ID
-* `curl -X DELETE \
-  http://localhost:8080/api/books \
-  -H 'Authorization: Bearer token' \
-  -H 'Content-Type: application/json'
-  `
+* `curl -X DELETE http://localhost:8080/api/books -H 'Authorization: Bearer token' -H 'Content-Type: application/json'`
 #### Borrow Book
- * `curl -X POST \
-http://localhost:8080/api/borrow/bookId/patron/patronId \
--H 'Authorization: Bearer token' \
--H 'Content-Type: application/json'
-`
+ * `curl -X POSThttp://localhost:8080/api/borrow/bookId/patron/patronId -H 'Authorization: Bearer token' -H 'Content-Type: application/json'`
  * Replace book_id in the url with the required book_id, same for patronId
 
 #### Return Book
-* `curl -X PUT \
-  http://localhost:8080/api/borrow/bookId/patron/patronId \
-  -H 'Authorization: Bearer token' \
-  -H 'Content-Type: application/json'
-  `
+* `curl -X PUT http://localhost:8080/api/borrow/bookId/patron/patronId -H 'Authorization: Bearer token' -H 'Content-Type: application/json'`
 * Replace book_id in the url with the required book_id, same for patronId
