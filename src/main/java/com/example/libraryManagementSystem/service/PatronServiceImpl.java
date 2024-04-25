@@ -34,6 +34,11 @@ public class PatronServiceImpl implements PatronService{
     }
 
     @Override
+    public void deleteAll() {
+        patronRepository.deleteAll();
+    }
+
+    @Override
     public void deleteById(Long id) {
         patronRepository.deleteById(id);
     }
