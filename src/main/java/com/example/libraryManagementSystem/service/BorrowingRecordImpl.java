@@ -35,6 +35,11 @@ public class BorrowingRecordImpl implements BorrowingRecordService{
     }
 
     @Override
+    public void deleteAll() {
+
+    }
+
+    @Override
     public void deleteById(Id id) {
         borrowingRecordRepository.deleteById(id);
     }
